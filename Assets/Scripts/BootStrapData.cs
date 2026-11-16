@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using NUnit.Framework.Constraints;
 
 public static class PreformBootstrap
 {
@@ -28,7 +29,7 @@ public class BootStrapData : MonoBehaviour
 {
     public static BootStrapData Instance { get; private set; } = null;
 
-    public GameStateManager gameStateManager = null;
+    public GameStateManager gameStateManager;
     private void Awake()
     {
         if(Instance != null)
@@ -41,8 +42,14 @@ public class BootStrapData : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        gameStateManager = FindFirstObjectByType<GameStateManager>();
+        if(gameStateManager == null)
+        {
+            GameObject obj = new GameObject("GameStateManager", typeof(GameStateManager));
+            gameStateManager = obj.GetComponent<GameStateManager>();
+            DontDestroyOnLoad(gameStateManager);
+        }
         gameStateManager.SetGameStates(GameStates.init);
+       
     }
 
     public void Test()
