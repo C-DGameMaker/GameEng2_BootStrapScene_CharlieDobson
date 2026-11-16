@@ -26,15 +26,22 @@ public static class PreformBootstrap
 
 public class BootStrapData : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static BootStrapData Instance { get; private set; } = null;
+    private void Awake()
     {
-        
+        if(Instance != null)
+        {
+            Debug.LogError("Found Bootstrap Data on " + gameObject.name);
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Test()
     {
-        
+        Debug.Log("Bootstrap Sucessful");
     }
 }
