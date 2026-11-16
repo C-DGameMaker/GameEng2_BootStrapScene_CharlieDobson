@@ -27,6 +27,8 @@ public static class PreformBootstrap
 public class BootStrapData : MonoBehaviour
 {
     public static BootStrapData Instance { get; private set; } = null;
+
+    public GameStateManager gameStateManager = null;
     private void Awake()
     {
         if(Instance != null)
@@ -38,6 +40,9 @@ public class BootStrapData : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        gameStateManager = FindFirstObjectByType<GameStateManager>();
+        gameStateManager.SetGameStates(GameStates.init);
     }
 
     public void Test()

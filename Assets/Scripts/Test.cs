@@ -6,6 +6,7 @@ public class Test : MonoBehaviour
     void Start()
     {
         BootStrapData.Instance.Test();
+        Debug.Log(BootStrapData.Instance.gameStateManager.currentState);
     }
 
     // Update is called once per frame
