@@ -38,7 +38,7 @@ public class GameStateManager : MonoBehaviour
                 break;
 
             case GameStates.init:
-                Debug.Log("Got here");
+                BootStrapData.Instance.sceneManager.SceneLoad("MainMenuScene");
                 SetGameStates(GameStates.mainMenu);
                 break;
 

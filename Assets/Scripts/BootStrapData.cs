@@ -9,7 +9,7 @@ public static class PreformBootstrap
     const string SceneName = "BootStrapScene";
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    public static void Execute()
+    public static void PunishmentTime()
     {
         for (int sceneIndex = 0; sceneIndex < SceneManager.sceneCount; sceneIndex++)
         {
@@ -29,7 +29,9 @@ public class BootStrapData : MonoBehaviour
 {
     public static BootStrapData Instance { get; private set; } = null;
 
-    public GameStateManager gameStateManager;
+    public GameStateManager gameStateManager { get; private set; }
+    public SceneManagment sceneManager { get; private set; }
+    public UIManager uiManager { get; private set; }
     private void Awake()
     {
         if(Instance != null)
@@ -42,13 +44,29 @@ public class BootStrapData : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if(gameStateManager == null)
+        if (sceneManager == null)
+        {
+            GameObject obj = new GameObject("Scene Manager", typeof(SceneManagment));
+            sceneManager = obj.GetComponent<SceneManagment>();
+            DontDestroyOnLoad(obj);
+        }
+
+        if (gameStateManager == null)
         {
             GameObject obj = new GameObject("GameStateManager", typeof(GameStateManager));
             gameStateManager = obj.GetComponent<GameStateManager>();
             DontDestroyOnLoad(gameStateManager);
         }
         gameStateManager.SetGameStates(GameStates.init);
+
+        if(uiManager == null)
+        {
+            GameObject obj = new GameObject("UIManager", typeof(UIManager));
+            uiManager = obj.GetComponent<UIManager>();
+            DontDestroyOnLoad (obj);
+        }
+
+        
        
     }
 
